@@ -4,6 +4,9 @@ body {
     padding: 0;
     line-height: 1.6;
 }
+header h1 {
+    color: blue;
+}
 
 header {
     background: #333;
