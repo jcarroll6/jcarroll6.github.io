@@ -3,467 +3,714 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>The Carroll Report — John Carroll</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<title>Οδός Κάρολ — Carroll Street</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Crimson+Pro:ital,wght@0,400;0,600;1,400;1,600&family=IBM+Plex+Mono:wght@400;500&family=Dancing+Script:wght@600&display=swap" rel="stylesheet">
 <style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  :root {
-    --cream: #F5F0E8;
-    --dark: #1A1208;
-    --gold: #C8933A;
-    --gold-light: #E8C97A;
-    --red: #8B1A1A;
-    --ink: #2C2010;
-    --rule: #C8933A;
-  }
-  body { background: var(--cream); color: var(--ink); font-family: 'IBM Plex Mono', monospace; min-height: 100vh; overflow-x: hidden; }
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Crimson Pro',serif;background:#1a2a4a;overflow-x:hidden;}
 
-  /* TICKER */
-  .ticker-wrap { background: var(--dark); color: var(--gold-light); font-size: 11px; letter-spacing: 0.08em; padding: 7px 0; overflow: hidden; white-space: nowrap; border-bottom: 2px solid var(--gold); }
-  .ticker-track { display: inline-block; animation: ticker 28s linear infinite; }
-  @keyframes ticker { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
-  .ticker-item { display: inline-block; margin-right: 48px; }
-  .ticker-item .up { color: #6FCF97; }
-  .ticker-item .dn { color: #EB5757; }
+/* ── SKY ── */
+.sky{height:80px;background:#1a2a4a;position:relative;overflow:hidden;}
 
-  /* MASTHEAD */
-  .masthead { border-bottom: 3px double var(--gold); padding: 32px 48px 20px; display: grid; grid-template-columns: 1fr auto 1fr; align-items: end; gap: 16px; }
-  .masthead-left { font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--red); padding-bottom: 6px; }
-  .masthead-title { text-align: center; }
-  .masthead-title h1 { font-family: 'Playfair Display', serif; font-size: clamp(36px, 6vw, 72px); font-weight: 700; line-height: 1; color: var(--dark); }
-  .masthead-title .edition { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); margin-top: 6px; }
-  .masthead-right { text-align: right; font-size: 10px; letter-spacing: 0.1em; color: var(--ink); opacity: 0.6; padding-bottom: 6px; }
+/* ── LIGHTS ── */
+.lights-bar{height:32px;background:#1a2a4a;position:relative;}
+.lights-bar svg{width:100%;height:32px;display:block;}
 
-  /* NAV */
-  .nav-bar { background: var(--dark); display: flex; justify-content: center; flex-wrap: wrap; }
-  .nav-bar a { color: var(--cream); font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase; padding: 10px 20px; text-decoration: none; border-right: 1px solid rgba(200,147,58,0.3); transition: background 0.2s, color 0.2s; cursor: pointer; }
-  .nav-bar a:first-child { border-left: 1px solid rgba(200,147,58,0.3); }
-  .nav-bar a:hover, .nav-bar a.active { background: var(--gold); color: var(--dark); }
+/* ── STREET SIGN ── */
+.street-sign{background:#0d1f50;color:#F5E6A0;text-align:center;padding:7px 0 5px;border-top:2px solid #C8A030;border-bottom:2px solid #C8A030;}
+.street-sign .gr{font-family:'Cinzel',serif;font-size:15px;letter-spacing:.18em;}
+.street-sign .en{font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.22em;opacity:.65;margin-top:2px;}
 
-  /* TABS */
-  .tab-content { display: none; }
-  .tab-content.active { display: block; }
+/* ── BUNTING ── */
+.bunting-bar{height:20px;background:#1a2a4a;}
+.bunting-bar svg{width:100%;height:20px;display:block;}
 
-  /* MAIN LAYOUT */
-  .main { max-width: 1100px; margin: 0 auto; padding: 40px 32px; display: grid; grid-template-columns: 2fr 1fr; gap: 40px; }
-  .main.full-width { grid-template-columns: 1fr; }
+/* ── BUILDING ── */
+.building-wrap{position:relative;background:#C8B090;border-top:8px solid #A08060;}
+.stone-svg{width:100%;display:block;position:absolute;top:0;left:0;pointer-events:none;z-index:1;}
 
-  /* SECTION LABELS */
-  .section-label { font-size: 9px; letter-spacing: 0.25em; text-transform: uppercase; color: var(--red); border-top: 2px solid var(--red); padding-top: 6px; margin-bottom: 16px; }
+/* ── STOREFRONTS ── */
+.storefronts{display:grid;grid-template-columns:repeat(4,1fr);position:relative;z-index:2;}
+.store{cursor:pointer;border-right:6px solid #7A5830;transition:filter .15s;}
+.store:last-child{border-right:none;}
+.store:hover{filter:brightness(1.07);}
 
-  /* ABOUT */
-  .headline { font-family: 'Playfair Display', serif; font-size: clamp(28px, 4vw, 48px); font-weight: 700; line-height: 1.1; color: var(--dark); margin-bottom: 12px; }
-  .headline em { font-style: italic; font-weight: 400; color: var(--red); }
-  .dateline { font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gold); margin-bottom: 12px; }
-  .body-copy { font-size: 14px; line-height: 1.8; color: var(--ink); border-left: 3px solid var(--gold); padding-left: 16px; margin-bottom: 24px; }
-  .pullquote { font-family: 'Playfair Display', serif; font-style: italic; font-size: 22px; line-height: 1.4; color: var(--red); border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); padding: 16px 0; margin: 24px 0; text-align: center; }
+/* ── AWNING ── */
+.awning{height:54px;position:relative;overflow:visible;}
+.aw-rod{position:absolute;top:0;left:-3px;right:-3px;height:6px;background:#5A3010;z-index:3;border-radius:2px;}
+.aw-cloth{position:absolute;top:6px;left:0;right:0;bottom:0;}
+.aw-scallop{position:absolute;bottom:-12px;left:-3px;right:-3px;display:flex;z-index:2;}
+.aw-scallop span{flex:1;height:16px;border-radius:0 0 50% 50%;display:block;border-bottom:2px solid rgba(0,0,0,.15);}
 
-  /* PROJECTS */
-  .projects-list { display: flex; flex-direction: column; gap: 16px; }
-  .project-item { border-bottom: 1px solid rgba(200,147,58,0.3); padding-bottom: 16px; }
-  .project-number { font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); margin-bottom: 4px; }
-  .project-title { font-family: 'Playfair Display', serif; font-size: 20px; font-weight: 700; color: var(--dark); margin-bottom: 6px; }
-  .project-desc { font-size: 12px; line-height: 1.7; color: var(--ink); opacity: 0.75; }
-  .project-link { display: inline-block; margin-top: 8px; font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--red); text-decoration: none; border-bottom: 1px solid var(--red); }
+/* ── STONE WALL ── */
+.stone-wall{height:90px;position:relative;overflow:hidden;display:flex;flex-direction:column;justify-content:flex-start;padding:8px 10px 0;}
 
-  /* SIDEBAR */
-  .sidebar-box { border: 1px solid var(--gold); padding: 20px; margin-bottom: 24px; background: rgba(200,147,58,0.04); }
-  .sidebar-title { font-family: 'Playfair Display', serif; font-size: 18px; font-weight: 700; color: var(--dark); margin-bottom: 12px; border-bottom: 1px solid rgba(200,147,58,0.4); padding-bottom: 8px; }
-  .skill-row { display: flex; justify-content: space-between; align-items: center; padding: 6px 0; border-bottom: 1px dotted rgba(200,147,58,0.3); font-size: 12px; }
-  .skill-row:last-child { border-bottom: none; }
-  .skill-bar { width: 80px; height: 6px; background: rgba(200,147,58,0.2); overflow: hidden; }
-  .skill-fill { height: 100%; background: var(--gold); width: 0%; transition: width 1.2s cubic-bezier(0.4,0,0.2,1); }
+/* ── WINDOW ── */
+.win-wrap{margin:0 auto;width:70%;position:relative;}
+.win{background:#4A6A8A;border:4px solid #3A2808;position:relative;overflow:hidden;height:58px;display:flex;align-items:center;justify-content:center;}
+.win-reflection{position:absolute;top:2px;left:2px;right:40%;bottom:40%;background:rgba(255,255,255,.12);pointer-events:none;}
+.grille{position:absolute;inset:0;pointer-events:none;}
+.grille::before{content:'';position:absolute;left:33%;top:0;bottom:0;width:2.5px;background:rgba(20,10,0,.55);}
+.grille::after{content:'';position:absolute;right:33%;top:0;bottom:0;width:2.5px;background:rgba(20,10,0,.55);}
+.grille-h{position:absolute;left:0;right:0;height:2.5px;background:rgba(20,10,0,.55);top:50%;transform:translateY(-50%);}
+.shutters{display:flex;gap:2px;position:absolute;top:0;left:0;right:0;bottom:0;pointer-events:none;}
+.shutter{flex:1;background:#1A6BC4;opacity:.9;display:flex;flex-direction:column;justify-content:space-around;padding:3px 2px;}
+.shutter-slat{height:2px;background:rgba(0,0,0,.2);border-radius:1px;}
+.win-sill{height:6px;background:#A08060;border-bottom:2px solid #7A5830;width:78%;margin:0 auto;}
+.win-sill-shadow{height:3px;background:rgba(0,0,0,.15);width:74%;margin:0 auto;}
 
-  /* CLASSIFIEDS */
-  .classifieds { background: var(--dark); color: var(--cream); padding: 20px; }
-  .classifieds .section-label { color: var(--gold-light); border-color: var(--gold); }
-  .classifieds-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 8px; }
-  .classified-item { border: 1px solid rgba(200,147,58,0.4); padding: 10px; font-size: 11px; line-height: 1.6; }
-  .classified-item .cl-head { font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold-light); margin-bottom: 4px; }
-  .classified-item a { color: var(--gold-light); text-decoration: none; }
-  .classified-item a:hover { text-decoration: underline; }
+/* ── PLAQUE ── */
+.plaque{background:#F5EDD0;border:2px solid #8B5020;border-radius:2px;padding:3px 6px;text-align:center;margin:6px 8px 0;position:relative;z-index:2;}
+.s-name{font-family:'Cinzel',serif;font-size:11px;color:#3A1808;letter-spacing:.06em;}
+.s-greek{font-family:'Crimson Pro',serif;font-style:italic;font-size:10px;color:#8B5020;}
 
-  /* NEWS */
-  .news-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 24px; margin-top: 8px; }
-  .news-card { border: 1px solid rgba(200,147,58,0.35); padding: 20px; background: rgba(200,147,58,0.03); display: flex; flex-direction: column; gap: 8px; }
-  .news-card .news-tag { font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--red); }
-  .news-card .news-headline { font-family: 'Playfair Display', serif; font-size: 18px; font-weight: 700; line-height: 1.2; color: var(--dark); }
-  .news-card .news-body { font-size: 12px; line-height: 1.7; color: var(--ink); opacity: 0.8; flex: 1; }
-  .news-card .news-source { font-size: 10px; letter-spacing: 0.1em; color: var(--gold); margin-top: 4px; }
+/* ── DOOR ── */
+.door-section{display:flex;justify-content:center;padding-bottom:0;}
+.door-arch{width:46px;position:relative;margin:0 auto;}
+.door-arch-top{height:23px;background:#1A6BC4;border-radius:50% 50% 0 0/100% 100% 0 0;border:3px solid #3A2808;border-bottom:none;position:relative;overflow:hidden;}
+.door-arch-top::after{content:'';position:absolute;top:3px;left:3px;right:3px;bottom:0;background:#1A5AAA;border-radius:50% 50% 0 0/100% 100% 0 0;}
+.door-body{height:48px;background:#1A6BC4;border:3px solid #3A2808;border-top:none;display:flex;align-items:center;justify-content:flex-end;padding-right:5px;position:relative;overflow:hidden;}
+.door-body::after{content:'';position:absolute;top:0;left:3px;bottom:0;width:40%;background:#1A5AAA;pointer-events:none;}
+.door-knob{width:6px;height:6px;background:#F5C842;border-radius:50%;position:relative;z-index:2;}
+.door-step{height:8px;background:#A08060;border:2px solid #7A5830;border-top:none;margin:0 -1px;}
 
-  /* SCORES */
-  .scores-section { margin-bottom: 32px; }
-  .scores-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 16px; margin-top: 12px; }
-  .score-card { background: var(--dark); color: var(--cream); padding: 16px; border: 1px solid rgba(200,147,58,0.4); }
-  .score-card .sc-league { font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold-light); margin-bottom: 8px; }
-  .score-card .sc-teams { display: flex; flex-direction: column; gap: 6px; }
-  .score-card .sc-team { display: flex; justify-content: space-between; font-size: 13px; }
-  .score-card .sc-team .sc-name { opacity: 0.9; }
-  .score-card .sc-team .sc-score { font-weight: 500; color: var(--gold-light); }
-  .score-card .sc-team.winner .sc-name { color: #6FCF97; }
-  .score-card .sc-team.winner .sc-score { color: #6FCF97; }
-  .score-card .sc-status { font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(232,201,122,0.6); margin-top: 8px; border-top: 1px solid rgba(200,147,58,0.2); padding-top: 8px; }
+/* ── AWNING THEMES ── */
+.store-p .aw-cloth{background:repeating-linear-gradient(90deg,#1A6BC4 0,#1A6BC4 14px,#0D4A9A 14px,#0D4A9A 20px);}
+.store-p .aw-scallop span{background:#0D4A9A;}
+.store-b .aw-cloth{background:repeating-linear-gradient(90deg,#C42020 0,#C42020 14px,#8B1010 14px,#8B1010 20px);}
+.store-b .aw-scallop span{background:#8B1010;}
+.store-s .aw-cloth{background:repeating-linear-gradient(90deg,#209A40 0,#209A40 14px,#126828 14px,#126828 20px);}
+.store-s .aw-scallop span{background:#126828;}
+.store-f .aw-cloth{background:repeating-linear-gradient(90deg,#C8900A 0,#C8900A 14px,#8A6008 14px,#8A6008 20px);}
+.store-f .aw-scallop span{background:#8A6008;}
 
-  /* LOADING / ERROR */
-  .loading-box { text-align: center; padding: 60px 20px; font-size: 13px; color: var(--gold); letter-spacing: 0.1em; }
-  .loading-box .spinner { display: inline-block; width: 20px; height: 20px; border: 2px solid rgba(200,147,58,0.3); border-top-color: var(--gold); border-radius: 50%; animation: spin 0.8s linear infinite; margin-bottom: 12px; }
-  @keyframes spin { to { transform: rotate(360deg); } }
-  .error-box { text-align: center; padding: 40px 20px; font-size: 12px; color: var(--red); border: 1px solid rgba(139,26,26,0.3); }
+/* ── OUTDOOR ── */
+.outdoor-area{background:#9A7A50;border-top:5px solid #7A5830;padding:10px 4px 0;position:relative;min-height:80px;}
+.cobble-road{background:#8A7058;border-top:3px solid #6A5038;padding:3px 0;}
+.cobble-road svg{width:100%;display:block;}
+.pavement{background:#7A6048;height:22px;display:flex;align-items:center;justify-content:center;border-top:2px solid #5A4028;}
+.hint{font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.15em;color:#F5E6A0;}
 
-  /* API KEY BANNER */
-  .api-banner { background: var(--red); color: var(--cream); padding: 10px 20px; text-align: center; font-size: 11px; letter-spacing: 0.05em; display: none; }
-  .api-banner a { color: var(--gold-light); }
+/* ══════════════════════════════════════
+   PANEL / MENU SYSTEM
+══════════════════════════════════════ */
+.panel{display:none;background:#FDFAF0;border-top:5px solid #8B5020;}
+.panel.open{display:block;animation:slideIn .28s ease;}
+@keyframes slideIn{from{opacity:0;transform:translateY(-8px);}to{opacity:1;transform:translateY(0);}}
 
-  /* FOOTER */
-  footer { text-align: center; border-top: 3px double var(--gold); padding: 20px; font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--ink); opacity: 0.5; margin-top: 20px; }
+.menu-wrap{max-width:960px;margin:0 auto;padding:28px 28px 40px;}
+.menu-top{text-align:center;padding-bottom:14px;border-bottom:2px solid #C8A060;margin-bottom:22px;position:relative;}
+.menu-close{position:absolute;right:0;top:0;background:none;border:1.5px solid #8B5020;color:#8B5020;font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.1em;padding:4px 10px;cursor:pointer;border-radius:2px;}
+.menu-close:hover{background:#8B5020;color:#FFF8E0;}
+.menu-taverna{font-family:'Dancing Script',cursive;font-size:13px;color:#8B5020;}
+.menu-title{font-family:'Cinzel',serif;font-size:26px;color:#3A1808;margin:2px 0;}
+.menu-greek{font-family:'Crimson Pro',serif;font-style:italic;font-size:15px;color:#8B5020;}
+.menu-ornament{color:#C8A060;font-size:16px;letter-spacing:8px;margin-top:4px;}
+.menu-footer{text-align:center;margin-top:24px;font-family:'Crimson Pro',serif;font-style:italic;font-size:13px;color:#8B6040;border-top:1px solid #C8A060;padding-top:12px;}
 
-  @media (max-width: 700px) {
-    .masthead { grid-template-columns: 1fr; text-align: center; padding: 20px 20px 12px; }
-    .masthead-left, .masthead-right { display: none; }
-    .main { grid-template-columns: 1fr; padding: 24px 16px; }
-    .nav-bar a { padding: 10px 12px; font-size: 10px; }
-    .classifieds-grid { grid-template-columns: 1fr; }
-    .news-grid { grid-template-columns: 1fr; }
-    .scores-grid { grid-template-columns: 1fr 1fr; }
-  }
+/* menu section */
+.msec{margin-bottom:24px;}
+.msec-title{font-family:'Cinzel',serif;font-size:12px;letter-spacing:.12em;color:#8B5020;border-bottom:1px solid #C8A060;padding-bottom:3px;margin-bottom:10px;text-transform:uppercase;}
+
+/* menu item row */
+.mi{display:flex;align-items:baseline;margin-bottom:8px;}
+.mi-left{flex:0 0 auto;max-width:58%;}
+.mi-name{font-family:'Crimson Pro',serif;font-size:16px;font-weight:600;color:#2A1008;}
+.mi-sub{font-family:'Crimson Pro',serif;font-style:italic;font-size:12px;color:#8B6040;display:block;margin-top:-1px;}
+.mi-dots{flex:1;border-bottom:1.5px dotted #C8A060;margin:0 6px;min-width:12px;}
+.mi-val{font-family:'IBM Plex Mono',monospace;font-size:11px;color:#8B5020;flex:0 0 auto;white-space:nowrap;}
+.mi-val.up{color:#1a7a30;}
+.mi-val.dn{color:#b01010;}
+
+/* two-col grid */
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:20px 36px;}
+@media(max-width:600px){.two-col{grid-template-columns:1fr;}}
+
+/* loading / error */
+.loading{font-family:'IBM Plex Mono',monospace;font-size:11px;color:#8B6040;letter-spacing:.08em;padding:16px 0;text-align:center;}
+.loading::after{content:' ...';animation:dots 1.2s steps(3,end) infinite;}
+@keyframes dots{0%{content:' .'}33%{content:' ..'}66%{content:' ...'}}
+
+/* ── CALENDAR ── */
+.cal-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;}
+.cal-month{font-family:'Cinzel',serif;font-size:18px;color:#3A1808;}
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:3px;margin-bottom:16px;}
+.cal-day-label{font-family:'IBM Plex Mono',monospace;font-size:9px;text-align:center;color:#8B6040;padding:3px 0;letter-spacing:.05em;}
+.cal-cell{min-height:32px;border:1px solid #E8D8B0;border-radius:2px;padding:2px 4px;background:#fff;font-size:11px;}
+.cal-cell.other-month{background:#F5EDD0;color:#C8A060;}
+.cal-cell.today{border-color:#8B5020;background:#FFF8E0;font-weight:600;}
+.cal-cell .day-num{font-family:'IBM Plex Mono',monospace;font-size:10px;color:#8B5020;}
+.cal-cell.today .day-num{color:#3A1808;}
+.event-dot{display:block;font-size:9px;color:#1A6BC4;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;line-height:1.3;font-family:'Crimson Pro',serif;font-style:italic;}
+
+/* upcoming events list */
+.event-list{display:flex;flex-direction:column;gap:8px;}
+.event-item{display:flex;gap:10px;align-items:flex-start;border-bottom:1px dotted #C8A060;padding-bottom:8px;}
+.event-time{font-family:'IBM Plex Mono',monospace;font-size:10px;color:#8B5020;min-width:80px;padding-top:2px;}
+.event-name{font-family:'Crimson Pro',serif;font-size:15px;font-weight:600;color:#2A1008;}
+.event-cal{font-family:'Crimson Pro',serif;font-style:italic;font-size:12px;color:#8B6040;}
+
+/* ── STOCKS ── */
+.stock-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px;margin-top:4px;}
+.stock-card{background:#fff;border:1.5px solid #E8D8B0;border-radius:3px;padding:10px 12px;}
+.stock-ticker{font-family:'IBM Plex Mono',monospace;font-size:13px;font-weight:500;color:#3A1808;}
+.stock-name{font-family:'Crimson Pro',serif;font-style:italic;font-size:11px;color:#8B6040;margin-bottom:4px;}
+.stock-price{font-family:'IBM Plex Mono',monospace;font-size:16px;color:#3A1808;}
+.stock-change{font-family:'IBM Plex Mono',monospace;font-size:11px;margin-top:2px;}
+.stock-change.up{color:#1a7a30;}
+.stock-change.dn{color:#b01010;}
+
+/* ── WEATHER ── */
+.weather-bar{display:flex;align-items:center;gap:20px;background:#fff;border:1.5px solid #E8D8B0;border-radius:3px;padding:12px 16px;margin-bottom:16px;}
+.weather-temp{font-family:'Cinzel',serif;font-size:32px;color:#3A1808;}
+.weather-desc{font-family:'Crimson Pro',serif;font-size:15px;color:#8B5020;font-style:italic;}
+.weather-detail{font-family:'IBM Plex Mono',monospace;font-size:10px;color:#8B6040;margin-top:2px;}
+
+/* ── NEWS ── */
+.news-list{display:flex;flex-direction:column;gap:10px;}
+.news-item{border-bottom:1px dotted #C8A060;padding-bottom:10px;}
+.news-tag{font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:#8B5020;margin-bottom:2px;}
+.news-headline{font-family:'Crimson Pro',serif;font-size:15px;font-weight:600;color:#2A1008;line-height:1.3;}
+.news-source{font-family:'Crimson Pro',serif;font-style:italic;font-size:11px;color:#8B6040;margin-top:2px;}
+.news-link{font-family:'IBM Plex Mono',monospace;font-size:9px;color:#1A6BC4;text-decoration:none;letter-spacing:.05em;}
+.news-link:hover{text-decoration:underline;}
+
+/* ── SCORES ── */
+.scores-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:10px;margin-top:4px;}
+.score-card{background:#2A1808;color:#F5E6A0;padding:12px;border:1px solid #C8A060;border-radius:2px;}
+.score-league{font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.15em;color:#C8A060;margin-bottom:6px;}
+.score-row{display:flex;justify-content:space-between;font-size:13px;margin-bottom:3px;}
+.score-row.winner{color:#6FCF97;}
+.score-status{font-family:'IBM Plex Mono',monospace;font-size:9px;color:rgba(200,160,96,.7);border-top:1px solid rgba(200,160,96,.2);margin-top:6px;padding-top:5px;}
 </style>
 </head>
 <body>
 
-<div class="api-banner" id="apiBanner">
-  &#9888;&nbsp; Add your Anthropic API key in the script at the bottom of this file to enable live news.
-  <a href="https://console.anthropic.com/settings/keys" target="_blank">Get a key &rarr;</a>
+<!-- ════════════════════════════════════
+     CONFIG — fill these in
+════════════════════════════════════ -->
+<script>
+const CONFIG = {
+  // 1. Get a free key at https://newsdata.io (takes 2 min)
+  NEWS_API_KEY: 'YOUR_NEWSDATA_KEY',
+
+  // 2. Your Google Sheet — publish to web as CSV:
+  //    File → Share → Publish to web → Sheet1 → CSV → copy URL
+  SHEET_CSV_URL: 'YOUR_GOOGLE_SHEET_CSV_URL',
+
+  // 3. Google Calendar — after signing in below the site will
+  //    ask for permission automatically via Google OAuth
+  GCAL_CLIENT_ID: 'YOUR_GOOGLE_CLIENT_ID',
+
+  // Baltimore coords (pre-filled)
+  LAT: 39.2904,
+  LON: -76.6122,
+};
+</script>
+
+<!-- ════ SCENE ════ -->
+<div class="sky" id="skyEl"></div>
+<div class="lights-bar"><svg id="lightsEl" preserveAspectRatio="none"></svg></div>
+
+<div class="street-sign">
+  <div class="gr">🇬🇷 &nbsp; Οδός Κάρολ &nbsp; 🇺🇸</div>
+  <div class="en">Carroll Street &nbsp;·&nbsp; Baltimore, MD &nbsp;·&nbsp; Est. 2024</div>
 </div>
 
-<!-- TICKER -->
-<div class="ticker-wrap">
-  <div class="ticker-track">
-    <span class="ticker-item">JC VENTURES &nbsp;<span class="up">&#9650; +2.4%</span></span>
-    <span class="ticker-item">OPPORTUNITY INDEX &nbsp;<span class="up">&#9650; +1.1%</span></span>
-    <span class="ticker-item">HUSTLE COMPOSITE &nbsp;<span class="up">&#9650; +5.7%</span></span>
-    <span class="ticker-item">AMBITION FUTURES &nbsp;<span class="dn">&#9660; -0.3%</span></span>
-    <span class="ticker-item">NETWORKING ETF &nbsp;<span class="up">&#9650; +3.2%</span></span>
-    <span class="ticker-item">COFFEE CONSUMPTION &nbsp;<span class="up">&#9650; +8.1%</span></span>
-    <span class="ticker-item">JC VENTURES &nbsp;<span class="up">&#9650; +2.4%</span></span>
-    <span class="ticker-item">OPPORTUNITY INDEX &nbsp;<span class="up">&#9650; +1.1%</span></span>
-    <span class="ticker-item">HUSTLE COMPOSITE &nbsp;<span class="up">&#9650; +5.7%</span></span>
-    <span class="ticker-item">AMBITION FUTURES &nbsp;<span class="dn">&#9660; -0.3%</span></span>
-    <span class="ticker-item">NETWORKING ETF &nbsp;<span class="up">&#9650; +3.2%</span></span>
-    <span class="ticker-item">COFFEE CONSUMPTION &nbsp;<span class="up">&#9650; +8.1%</span></span>
-  </div>
-</div>
+<div class="bunting-bar"><svg id="buntingEl" preserveAspectRatio="none"></svg></div>
 
-<!-- MASTHEAD -->
-<header class="masthead">
-  <div class="masthead-left">Est. Washington, D.C. &bull; Vol. I</div>
-  <div class="masthead-title">
-    <h1>The Carroll Report</h1>
-    <div class="edition">Personal Portfolio &bull; All The News Worth Funding</div>
-  </div>
-  <div class="masthead-right" id="mastheadDate">March 2026<br>johncarroll006@gmail.com</div>
-</header>
+<div class="building-wrap">
+  <svg class="stone-svg" id="stoneSvg" style="height:300px;" preserveAspectRatio="none"></svg>
 
-<!-- NAV -->
-<nav class="nav-bar">
-  <a class="active" onclick="switchTab('home', this)">Home</a>
-  <a onclick="switchTab('sports', this)">Sports</a>
-  <a onclick="switchTab('world', this)">World</a>
-  <a onclick="switchTab('finance', this)">Finance</a>
-  <a href="#about" onclick="switchTab('home', this)">About</a>
-  <a href="#projects" onclick="switchTab('home', this)">Projects</a>
-  <a href="#contact" onclick="switchTab('home', this)">Contact</a>
-</nav>
-
-<!-- ===== HOME ===== -->
-<div id="tab-home" class="tab-content active">
-  <div class="main">
-    <div class="left-col">
-      <section id="about">
-        <div class="section-label">Front Page &bull; About</div>
-        <h2 class="headline">Local Man <em>Tries New Things,</em> Markets React Positively</h2>
-        <div class="dateline">Washington, D.C. — March 2026</div>
-        <p class="body-copy">
-          Analysts have confirmed what insiders suspected all along: John Carroll is actively exploring new passions,
-          and early indicators suggest strong upside potential. Sources close to the situation report
-          enthusiasm is at a multi-year high, with no signs of a correction in sight.
-        </p>
-        <blockquote class="pullquote">
-          "Let's do this."
-          <br><small style="font-size:14px;color:#888;font-family:'IBM Plex Mono',monospace;">— J. Carroll, on the record</small>
-        </blockquote>
-        <p class="body-copy">
-          Carroll's portfolio of interests is described by those familiar with the matter as "diversified and
-          aggressively positioned." No further guidance has been issued at this time, but Q2 is expected to bring
-          significant developments.
-        </p>
-      </section>
-
-      <section id="projects" style="margin-top:40px;">
-        <div class="section-label">Business Section &bull; Projects</div>
-        <div class="projects-list">
-          <div class="project-item">
-            <div class="project-number">Filing No. 001</div>
-            <div class="project-title">Project One</div>
-            <p class="project-desc">Replace this with your actual project — what you built, what problem it solves, and what tools or skills you used.</p>
-            <!-- <a href="#" class="project-link">View Project &rarr;</a> -->
-          </div>
-          <div class="project-item">
-            <div class="project-number">Filing No. 002</div>
-            <div class="project-title">Project Two</div>
-            <p class="project-desc">Describe your second project here. Link to a GitHub repo, a live demo, or a case study.</p>
-            <!-- <a href="#" class="project-link">View Project &rarr;</a> -->
-          </div>
-          <div class="project-item">
-            <div class="project-number">Filing No. 003</div>
-            <div class="project-title">Project Three</div>
-            <p class="project-desc">Your third project goes here. Duplicate this block for as many filings as you need.</p>
-            <!-- <a href="#" class="project-link">View Project &rarr;</a> -->
-          </div>
-        </div>
-      </section>
+  <div class="storefronts">
+    <!-- PERSONAL -->
+    <div class="store store-p" onclick="openPanel('p')">
+      <div class="awning"><div class="aw-rod"></div><div class="aw-cloth"></div>
+        <div class="aw-scallop"><span></span><span></span><span></span><span></span><span></span><span></span></div>
+      </div>
+      <div class="stone-wall" style="background:#C4A882;">
+        <div class="win-wrap"><div class="win"><div class="win-reflection"></div><div class="grille"><div class="grille-h"></div></div>
+          <div class="shutters" style="opacity:.3;"><div class="shutter"><div class="shutter-slat"></div><div class="shutter-slat"></div><div class="shutter-slat"></div><div class="shutter-slat"></div></div><div class="shutter"><div class="shutter-slat"></div><div class="shutter-slat"></div><div class="shutter-slat"></div><div class="shutter-slat"></div></div></div>
+        </div><div class="win-sill"></div><div class="win-sill-shadow"></div></div>
+        <div class="plaque"><div class="s-name">J. Carroll</div><div class="s-greek">Προσωπικά</div></div>
+      </div>
+      <div class="door-section" style="background:#C4A882;"><div class="door-arch"><div class="door-arch-top"></div><div class="door-body"><div class="door-knob"></div></div><div class="door-step"></div></div></div>
     </div>
 
-    <div class="sidebar">
-      <section>
-        <div class="sidebar-box">
-          <div class="section-label">Market Data &bull; Skills</div>
-          <div class="sidebar-title">Portfolio Holdings</div>
-          <div class="skill-row"><span class="skill-name">Financial Analysis</span><div class="skill-bar"><div class="skill-fill" data-width="85%"></div></div></div>
-          <div class="skill-row"><span class="skill-name">Excel / Modeling</span><div class="skill-bar"><div class="skill-fill" data-width="80%"></div></div></div>
-          <div class="skill-row"><span class="skill-name">Communication</span><div class="skill-bar"><div class="skill-fill" data-width="90%"></div></div></div>
-          <div class="skill-row"><span class="skill-name">Strategy</span><div class="skill-bar"><div class="skill-fill" data-width="75%"></div></div></div>
-          <div class="skill-row"><span class="skill-name">New Passions</span><div class="skill-bar"><div class="skill-fill" data-width="100%"></div></div></div>
-        </div>
-      </section>
+    <!-- BUSINESS -->
+    <div class="store store-b" onclick="openPanel('b')">
+      <div class="awning"><div class="aw-rod"></div><div class="aw-cloth"></div>
+        <div class="aw-scallop"><span></span><span></span><span></span><span></span><span></span><span></span></div>
+      </div>
+      <div class="stone-wall" style="background:#BEA07A;">
+        <div class="win-wrap"><div class="win"><div class="win-reflection"></div><div class="grille"><div class="grille-h"></div></div></div><div class="win-sill"></div><div class="win-sill-shadow"></div></div>
+        <div class="plaque"><div class="s-name">Επιχειρήσεις</div><div class="s-greek">Business</div></div>
+      </div>
+      <div class="door-section" style="background:#BEA07A;"><div class="door-arch"><div class="door-arch-top"></div><div class="door-body"><div class="door-knob"></div></div><div class="door-step"></div></div></div>
+    </div>
 
-      <section id="contact">
-        <div class="classifieds">
-          <div class="section-label">Classifieds &bull; Contact</div>
-          <div class="classifieds-grid">
-            <div class="classified-item">
-              <div class="cl-head">Email</div>
-              <a href="mailto:johncarroll006@gmail.com">johncarroll006<br>@gmail.com</a>
-            </div>
-            <div class="classified-item">
-              <div class="cl-head">GitHub</div>
-              <a href="https://github.com/jcarroll6" target="_blank">github.com/<br>jcarroll6</a>
-            </div>
-            <div class="classified-item">
-              <div class="cl-head">Status</div>
-              Open to offers
-            </div>
-            <div class="classified-item">
-              <div class="cl-head">Location</div>
-              Washington, D.C.
-            </div>
-          </div>
-        </div>
-      </section>
+    <!-- SPORTS -->
+    <div class="store store-s" onclick="openPanel('s')">
+      <div class="awning"><div class="aw-rod"></div><div class="aw-cloth"></div>
+        <div class="aw-scallop"><span></span><span></span><span></span><span></span><span></span><span></span></div>
+      </div>
+      <div class="stone-wall" style="background:#C8AA88;">
+        <div class="win-wrap"><div class="win"><div class="win-reflection"></div><div class="grille"><div class="grille-h"></div>
+          <div class="shutters" style="opacity:.22;"><div class="shutter"><div class="shutter-slat"></div><div class="shutter-slat"></div><div class="shutter-slat"></div><div class="shutter-slat"></div></div><div class="shutter"><div class="shutter-slat"></div><div class="shutter-slat"></div><div class="shutter-slat"></div><div class="shutter-slat"></div></div></div>
+        </div></div><div class="win-sill"></div><div class="win-sill-shadow"></div></div>
+        <div class="plaque"><div class="s-name">Αθλητισμός</div><div class="s-greek">Sports</div></div>
+      </div>
+      <div class="door-section" style="background:#C8AA88;"><div class="door-arch"><div class="door-arch-top"></div><div class="door-body"><div class="door-knob"></div></div><div class="door-step"></div></div></div>
+    </div>
+
+    <!-- FINANCE -->
+    <div class="store store-f" onclick="openPanel('f')">
+      <div class="awning"><div class="aw-rod"></div><div class="aw-cloth"></div>
+        <div class="aw-scallop"><span></span><span></span><span></span><span></span><span></span><span></span></div>
+      </div>
+      <div class="stone-wall" style="background:#C2A278;">
+        <div class="win-wrap"><div class="win"><div class="win-reflection"></div><div class="grille"><div class="grille-h"></div></div></div><div class="win-sill"></div><div class="win-sill-shadow"></div></div>
+        <div class="plaque"><div class="s-name">Χρηματοδότηση</div><div class="s-greek">Finance</div></div>
+      </div>
+      <div class="door-section" style="background:#C2A278;"><div class="door-arch"><div class="door-arch-top"></div><div class="door-body"><div class="door-knob"></div></div><div class="door-step"></div></div></div>
     </div>
   </div>
+
+  <div class="outdoor-area" id="outdoorArea"></div>
 </div>
 
-<!-- ===== SPORTS ===== -->
-<div id="tab-sports" class="tab-content">
-  <div class="main full-width">
-    <div class="scores-section">
-      <div class="section-label">Scores &bull; Your Teams</div>
-      <div class="scores-grid" id="scoresGrid">
-        <div class="loading-box"><div class="spinner"></div><br>Loading scores...</div>
+<div class="cobble-road"><svg id="cobbleEl" style="height:22px;" preserveAspectRatio="none"></svg></div>
+<div class="pavement"><div class="hint">— είσοδος · click a taverna to enter —</div></div>
+
+<!-- ════════════════════════════════════
+     PANEL: PERSONAL (Calendar)
+════════════════════════════════════ -->
+<div id="panel-p" class="panel">
+<div class="menu-wrap">
+  <div class="menu-top">
+    <button class="menu-close" onclick="closePanel()">✕ close</button>
+    <div class="menu-taverna">✧ Taverna tou Karol ✧</div>
+    <div class="menu-title">John Carroll</div>
+    <div class="menu-greek">Προσωπικά · Personal</div>
+    <div class="menu-ornament">❖ ❖ ❖</div>
+  </div>
+
+  <!-- Weather bar -->
+  <div id="weatherBar" class="loading">Loading weather</div>
+
+  <div class="two-col">
+    <!-- Calendar -->
+    <div>
+      <div class="msec">
+        <div class="msec-title">Ημερολόγιο · Calendar</div>
+        <div id="calStatus" class="loading">Connecting to Google Calendar</div>
+        <div id="calGrid" style="display:none;">
+          <div class="cal-header">
+            <div class="cal-month" id="calMonthLabel"></div>
+          </div>
+          <div class="cal-grid" id="calGridInner"></div>
+        </div>
       </div>
     </div>
+
+    <!-- Upcoming events + about -->
     <div>
-      <div class="section-label">Latest &bull; Sports News</div>
-      <div id="sportsNews"><div class="loading-box"><div class="spinner"></div><br>Fetching sports headlines...</div></div>
+      <div class="msec">
+        <div class="msec-title">Επόμενα · Upcoming</div>
+        <div id="eventsList" class="loading">Fetching events</div>
+      </div>
+      <div class="msec" style="margin-top:16px;">
+        <div class="msec-title">Επαφή · Contact</div>
+        <div class="mi"><div class="mi-left"><div class="mi-name">Email</div><span class="mi-sub">johncarroll006@gmail.com</span></div><div class="mi-dots"></div><div class="mi-val">✉</div></div>
+        <div class="mi"><div class="mi-left"><div class="mi-name">GitHub</div><span class="mi-sub">github.com/jcarroll6</span></div><div class="mi-dots"></div><div class="mi-val">⇗</div></div>
+        <div class="mi"><div class="mi-left"><div class="mi-name">Location</div><span class="mi-sub">Baltimore, MD</span></div><div class="mi-dots"></div><div class="mi-val">📍</div></div>
+        <div class="mi"><div class="mi-left"><div class="mi-name">Status</div><span class="mi-sub">Open to offers</span></div><div class="mi-dots"></div><div class="mi-val" style="color:#1a7a30;">● Open</div></div>
+      </div>
     </div>
   </div>
+  <div class="menu-footer">Σας ευχαριστούμε · Thank you for visiting · Παρακαλώ ξανά</div>
+</div>
 </div>
 
-<!-- ===== WORLD ===== -->
-<div id="tab-world" class="tab-content">
-  <div class="main full-width">
-    <div class="section-label">Dispatch &bull; USA &amp; Greece</div>
-    <div id="worldNews"><div class="loading-box"><div class="spinner"></div><br>Fetching world news...</div></div>
+<!-- ════════════════════════════════════
+     PANEL: BUSINESS
+════════════════════════════════════ -->
+<div id="panel-b" class="panel">
+<div class="menu-wrap">
+  <div class="menu-top">
+    <button class="menu-close" onclick="closePanel()">✕ close</button>
+    <div class="menu-taverna">✧ Επιχειρήσεις ✧</div>
+    <div class="menu-title">Business</div>
+    <div class="menu-greek">Επιχειρήσεις · Projects &amp; Skills</div>
+    <div class="menu-ornament">❖ ❖ ❖</div>
   </div>
-</div>
-
-<!-- ===== FINANCE ===== -->
-<div id="tab-finance" class="tab-content">
-  <div class="main full-width">
-    <div class="section-label">Markets &bull; Finance News</div>
-    <div id="financeNews"><div class="loading-box"><div class="spinner"></div><br>Fetching market news...</div></div>
+  <div class="two-col">
+    <div class="msec">
+      <div class="msec-title">Εργασίες · Projects</div>
+      <div class="mi"><div class="mi-left"><div class="mi-name">Project One</div><span class="mi-sub">Replace with your project</span></div><div class="mi-dots"></div><div class="mi-val">001</div></div>
+      <div class="mi"><div class="mi-left"><div class="mi-name">Project Two</div><span class="mi-sub">Replace with your project</span></div><div class="mi-dots"></div><div class="mi-val">002</div></div>
+      <div class="mi"><div class="mi-left"><div class="mi-name">Project Three</div><span class="mi-sub">Replace with your project</span></div><div class="mi-dots"></div><div class="mi-val">003</div></div>
+    </div>
+    <div class="msec">
+      <div class="msec-title">Δεξιότητες · Skills</div>
+      <div class="mi"><div class="mi-left"><div class="mi-name">Communication</div><span class="mi-sub">Spoken &amp; written</span></div><div class="mi-dots"></div><div class="mi-val">★★★★★</div></div>
+      <div class="mi"><div class="mi-left"><div class="mi-name">Financial Analysis</div><span class="mi-sub">Modeling &amp; valuation</span></div><div class="mi-dots"></div><div class="mi-val">★★★★☆</div></div>
+      <div class="mi"><div class="mi-left"><div class="mi-name">Excel / Modeling</div><span class="mi-sub">Spreadsheets &amp; data</span></div><div class="mi-dots"></div><div class="mi-val">★★★★☆</div></div>
+      <div class="mi"><div class="mi-left"><div class="mi-name">Strategy</div><span class="mi-sub">Planning &amp; execution</span></div><div class="mi-dots"></div><div class="mi-val">★★★★☆</div></div>
+      <div class="mi"><div class="mi-left"><div class="mi-name">New Passions</div><span class="mi-sub">Growing daily</span></div><div class="mi-dots"></div><div class="mi-val">★★★★★</div></div>
+    </div>
   </div>
+  <div class="menu-footer">Σας ευχαριστούμε · Thank you for visiting · Παρακαλώ ξανά</div>
+</div>
 </div>
 
-<footer>&copy; 2026 John Carroll &bull; All Rights Reserved &bull; Not Financial Advice</footer>
+<!-- ════════════════════════════════════
+     PANEL: SPORTS
+════════════════════════════════════ -->
+<div id="panel-s" class="panel">
+<div class="menu-wrap">
+  <div class="menu-top">
+    <button class="menu-close" onclick="closePanel()">✕ close</button>
+    <div class="menu-taverna">✧ Αθλητισμός ✧</div>
+    <div class="menu-title">Sports</div>
+    <div class="menu-greek">Αθλητισμός · My Teams</div>
+    <div class="menu-ornament">❖ ❖ ❖</div>
+  </div>
 
+  <div class="msec">
+    <div class="msec-title">Σκορ · Scores &amp; Schedule</div>
+    <div class="scores-grid">
+      <div class="score-card"><div class="score-league">NFL</div><div class="score-row winner"><span>Ravens</span><span>—</span></div><div class="score-row"><span>Opponent</span><span>—</span></div><div class="score-status">Off-season</div></div>
+      <div class="score-card"><div class="score-league">MLB</div><div class="score-row winner"><span>Orioles</span><span>—</span></div><div class="score-row"><span>Opponent</span><span>—</span></div><div class="score-status">Spring Training</div></div>
+      <div class="score-card"><div class="score-league">EPL</div><div class="score-row"><span>Chelsea FC</span><span>—</span></div><div class="score-row"><span>Opponent</span><span>—</span></div><div class="score-status">Check ESPN</div></div>
+      <div class="score-card"><div class="score-league">Super League GR</div><div class="score-row"><span>Panathinaikos</span><span>—</span></div><div class="score-row"><span>Opponent</span><span>—</span></div><div class="score-status">Check gazzetta.gr</div></div>
+      <div class="score-card"><div class="score-league">NHL</div><div class="score-row"><span>Capitals</span><span>—</span></div><div class="score-row"><span>Opponent</span><span>—</span></div><div class="score-status">See nhl.com</div></div>
+      <div class="score-card"><div class="score-league">NBA</div><div class="score-row"><span>Wizards</span><span>—</span></div><div class="score-row"><span>Opponent</span><span>—</span></div><div class="score-status">See nba.com</div></div>
+    </div>
+    <p style="font-family:'Crimson Pro',serif;font-style:italic;font-size:12px;color:#8B6040;margin-top:8px;">
+      Live scores require a sports data API (e.g. <a href="https://www.thesportsdb.com/api.php" target="_blank" class="news-link">TheSportsDB free tier</a>). Add your key to CONFIG.SPORTS_KEY to activate.
+    </p>
+  </div>
+
+  <div class="msec">
+    <div class="msec-title">Ειδήσεις · Sports News</div>
+    <div id="sportsNews" class="loading">Fetching sports headlines</div>
+  </div>
+  <div class="menu-footer">Σας ευχαριστούμε · Thank you for visiting · Παρακαλώ ξανά</div>
+</div>
+</div>
+
+<!-- ════════════════════════════════════
+     PANEL: FINANCE
+════════════════════════════════════ -->
+<div id="panel-f" class="panel">
+<div class="menu-wrap">
+  <div class="menu-top">
+    <button class="menu-close" onclick="closePanel()">✕ close</button>
+    <div class="menu-taverna">✧ Χρηματοδότηση ✧</div>
+    <div class="menu-title">Finance</div>
+    <div class="menu-greek">Χρηματοδότηση · Markets &amp; Portfolio</div>
+    <div class="menu-ornament">❖ ❖ ❖</div>
+  </div>
+
+  <div class="msec">
+    <div class="msec-title">Χαρτοφυλάκιο · Portfolio</div>
+    <div id="stockGrid" class="loading">Loading your portfolio</div>
+  </div>
+
+  <div class="msec">
+    <div class="msec-title">Αγορά · Market Indices</div>
+    <div class="stock-grid" id="indicesGrid">
+      <div class="loading">Loading indices</div>
+    </div>
+  </div>
+
+  <div class="msec">
+    <div class="msec-title">Ειδήσεις · Finance News</div>
+    <div id="financeNews" class="loading">Fetching finance headlines</div>
+  </div>
+  <div class="menu-footer">Σας ευχαριστούμε · Thank you for visiting · Παρακαλώ ξανά</div>
+</div>
+</div>
+
+<!-- ════════════════════════════════════
+     SCENE JS
+════════════════════════════════════ -->
 <script>
-// ─────────────────────────────────────────────────────
-//  CONFIG
-//  1. Go to https://console.anthropic.com/settings/keys
-//  2. Create an API key
-//  3. Paste it below, replacing YOUR_API_KEY_HERE
-// ─────────────────────────────────────────────────────
-const ANTHROPIC_API_KEY = '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';
+/* STARS */
+const sky=document.getElementById('skyEl');
+sky.innerHTML+='<div style="position:absolute;right:70px;top:14px;width:32px;height:32px;background:#FFF8D0;border-radius:50%;z-index:2;"></div><div style="position:absolute;right:62px;top:12px;width:26px;height:26px;background:#1a2a4a;border-radius:50%;z-index:3;"></div>';
+for(let i=0;i<60;i++){const s=document.createElement('div');const sz=Math.random()<.25?2:1;s.style.cssText=`position:absolute;width:${sz}px;height:${sz}px;background:#fff;border-radius:50%;top:${Math.random()*74}px;left:${Math.random()*100}%;opacity:${.3+Math.random()*.7}`;sky.appendChild(s);}
 
-// ─── Date ───
-const now = new Date();
-document.getElementById('mastheadDate').innerHTML =
-  now.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }) +
-  '<br>johncarroll006@gmail.com';
+/* LIGHTS */
+(function(){const svg=document.getElementById('lightsEl'),W=1400,cols=['#FFD700','#FF6B6B','#6BFF9E','#6BB5FF','#FF6BF5','#FFA040','#FFFFFF'];svg.setAttribute('viewBox',`0 0 ${W} 32`);let h='';for(let x=0;x<W;x+=26){const c=cols[Math.floor(x/26)%cols.length],sag=3+Math.sin(x*.04)*4;h+=`<line x1="${x}" y1="3" x2="${x+26}" y2="3" stroke="#666" stroke-width=".8" opacity=".5"/><line x1="${x+13}" y1="3" x2="${x+13}" y2="${12+sag}" stroke="#666" stroke-width=".7" opacity=".35"/><ellipse cx="${x+13}" cy="${14+sag}" rx="5" ry="6" fill="${c}" opacity=".92"/><ellipse cx="${x+13}" cy="${11+sag}" rx="3" ry="2.5" fill="#fff" opacity=".3"/>`;}svg.innerHTML=h;})();
 
-// ─── Skill bars ───
-window.addEventListener('load', () => {
-  setTimeout(() => {
-    document.querySelectorAll('.skill-fill').forEach(el => {
-      el.style.width = el.getAttribute('data-width');
-    });
-  }, 400);
-});
+/* BUNTING */
+(function(){const svg=document.getElementById('buntingEl'),W=1400,cols=['#1560BD','#fff','#C42020','#F5C842','#1560BD','#fff','#209A40','#C42020'];svg.setAttribute('viewBox',`0 0 ${W} 20`);let h='';for(let x=0;x<W;x+=30){const c=cols[Math.floor(x/30)%cols.length];h+=`<polygon points="${x+1},1 ${x+29},1 ${x+15},18" fill="${c}" opacity=".88"/><line x1="${x}" y1="1" x2="${x+30}" y2="1" stroke="#aaa" stroke-width=".7" opacity=".45"/>`;}svg.innerHTML=h;})();
 
-// ─── Tab switching ───
-const loaded = { home: true, sports: false, world: false, finance: false };
+/* STONE */
+(function(){const svg=document.getElementById('stoneSvg'),W=800,H=300;svg.setAttribute('viewBox',`0 0 ${W} ${H}`);let h='';[0,28,54,78,100,122,143,164,184,204,224,244,264,284].forEach((y,ri)=>{let x=ri%2===0?0:-25;while(x<W){const w=40+Math.random()*30,ht=16+Math.random()*8,c=Math.random()<.5?'rgba(0,0,0,.05)':'rgba(255,255,255,.06)';h+=`<rect x="${x+1}" y="${y+1}" width="${w-2}" height="${ht-2}" fill="${c}" rx="1"/><rect x="${x}" y="${y}" width="${w}" height="${ht}" fill="none" stroke="rgba(80,50,20,.12)" stroke-width=".8" rx="1"/>`;x+=w+1;}});svg.innerHTML=h;})();
 
-function switchTab(name, el) {
-  document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
-  document.querySelectorAll('.nav-bar a').forEach(a => a.classList.remove('active'));
-  document.getElementById('tab-' + name).classList.add('active');
-  if (el) el.classList.add('active');
-  if (!loaded[name]) {
-    loaded[name] = true;
-    if (name === 'sports')  loadSports();
-    if (name === 'world')   loadNews('world');
-    if (name === 'finance') loadNews('finance');
+/* OUTDOOR TABLES */
+(function(){const oa=document.getElementById('outdoorArea');let h='<div style="display:flex;align-items:flex-end;justify-content:space-around;padding:0 8px;">';for(let i=0;i<5;i++){const w=42+Math.random()*10|0;h+=`<div style="display:flex;flex-direction:column;align-items:center;"><div style="display:flex;gap:5px;margin-bottom:3px;"><div style="width:13px;height:11px;background:#8B2020;border-radius:1px 1px 0 0;border:1px solid #5A1010;"></div><div style="width:13px;height:11px;background:#8B2020;border-radius:1px 1px 0 0;border:1px solid #5A1010;"></div></div><div style="width:${w}px;height:7px;position:relative;border-radius:2px 2px 0 0;overflow:hidden;background:#fff;"><div style="position:absolute;inset:0;background-image:repeating-linear-gradient(0deg,transparent,transparent 5px,rgba(180,30,30,.4) 5px,rgba(180,30,30,.4) 6px),repeating-linear-gradient(90deg,transparent,transparent 5px,rgba(180,30,30,.4) 5px,rgba(180,30,30,.4) 6px);"></div></div><div style="width:${w+6}px;height:4px;background:#A07840;border:1px solid #7A5820;"></div><div style="display:flex;justify-content:space-between;width:${w-8}px;"><div style="width:3px;height:${12+Math.random()*4|0}px;background:#6A4020;"></div><div style="width:3px;height:${12+Math.random()*4|0}px;background:#6A4020;"></div></div></div>`;}h+='</div>';
+const treeData=[{left:'20%',tw:8,th:30,cw:54,ch:60,cc:'#2D6E1A'},{left:'50%',tw:9,th:36,cw:68,ch:72,cc:'#237015'},{left:'78%',tw:7,th:24,cw:46,ch:52,cc:'#2A6818'}];
+treeData.forEach(t=>{const d=document.createElement('div');d.style.cssText=`position:absolute;left:${t.left};bottom:0;display:flex;flex-direction:column;align-items:center;z-index:10;`;d.innerHTML=`<div style="width:${t.cw}px;height:${t.ch}px;background:${t.cc};border-radius:50% 45% 55% 50%;position:relative;overflow:hidden;"><div style="position:absolute;top:8px;left:8px;width:30%;height:30%;background:rgba(255,255,255,.07);border-radius:50%;"></div><div style="position:absolute;bottom:5px;right:8px;width:25%;height:25%;background:rgba(0,0,0,.12);border-radius:50%;"></div></div><div style="width:${t.tw}px;height:${t.th}px;background:#5A3A18;border-radius:2px;"></div>`;oa.appendChild(d);});
+oa.innerHTML=h+oa.innerHTML.replace(/<div style="display:flex;align-items:flex-end[^<]*/,'');
+oa.innerHTML='<div style="display:flex;align-items:flex-end;justify-content:space-around;padding:0 8px;">'+Array.from({length:5}).map((_,i)=>{const w=42+((i*7+13)%11)|0;return`<div style="display:flex;flex-direction:column;align-items:center;"><div style="display:flex;gap:5px;margin-bottom:3px;"><div style="width:13px;height:11px;background:#8B2020;border-radius:1px 1px 0 0;border:1px solid #5A1010;"></div><div style="width:13px;height:11px;background:#8B2020;border-radius:1px 1px 0 0;border:1px solid #5A1010;"></div></div><div style="width:${w}px;height:7px;position:relative;border-radius:2px 2px 0 0;overflow:hidden;background:#fff;"><div style="position:absolute;inset:0;background-image:repeating-linear-gradient(0deg,transparent,transparent 5px,rgba(180,30,30,.4) 5px,rgba(180,30,30,.4) 6px),repeating-linear-gradient(90deg,transparent,transparent 5px,rgba(180,30,30,.4) 5px,rgba(180,30,30,.4) 6px);"></div></div><div style="width:${w+6}px;height:4px;background:#A07840;border:1px solid #7A5820;"></div><div style="display:flex;justify-content:space-between;width:${w-8}px;"><div style="width:3px;height:16px;background:#6A4020;"></div><div style="width:3px;height:16px;background:#6A4020;"></div></div></div>`;}).join('')+'</div>';
+[{left:'20%',cw:54,ch:60,cc:'#2D6E1A',th:30},{left:'50%',cw:68,ch:72,cc:'#237015',th:36},{left:'78%',cw:46,ch:52,cc:'#2A6818',th:24}].forEach(t=>{const d=document.createElement('div');d.style.cssText=`position:absolute;left:${t.left};bottom:0;display:flex;flex-direction:column;align-items:center;z-index:10;pointer-events:none;`;d.innerHTML=`<div style="width:${t.cw}px;height:${t.ch}px;background:${t.cc};border-radius:50% 45% 55% 50%;overflow:hidden;position:relative;"><div style="position:absolute;top:8px;left:8px;width:30%;height:30%;background:rgba(255,255,255,.07);border-radius:50%;"></div></div><div style="width:8px;height:${t.th}px;background:#5A3A18;border-radius:2px;"></div>`;oa.appendChild(d);});})();
+
+/* COBBLE */
+(function(){const svg=document.getElementById('cobbleEl'),W=1400;svg.setAttribute('viewBox',`0 0 ${W} 22`);let h='';for(let r=0;r<2;r++){let x=r%2===0?0:-18;while(x<W){const w=28+((x*3+r*7)%14),sh=r%3===0?'rgba(0,0,0,.08)':'rgba(255,255,255,.05)';h+=`<rect x="${x+1}" y="${r*10+1}" width="${w-2}" height="8" fill="${sh}" rx="1"/><rect x="${x}" y="${r*10}" width="${w}" height="9" fill="none" stroke="rgba(60,40,20,.2)" stroke-width=".8" rx="1"/>`;x+=w+1;}}svg.innerHTML=h;})();
+</script>
+
+<!-- ════════════════════════════════════
+     DATA LOADERS
+════════════════════════════════════ -->
+<script>
+const loaded={p:false,b:false,s:false,f:false};
+let curPanel=null;
+
+function openPanel(id){
+  if(curPanel){document.getElementById('panel-'+curPanel).classList.remove('open');}
+  if(curPanel===id){curPanel=null;return;}
+  document.getElementById('panel-'+id).classList.add('open');
+  curPanel=id;
+  setTimeout(()=>document.getElementById('panel-'+id).scrollIntoView({behavior:'smooth',block:'nearest'}),60);
+  if(!loaded[id]){loaded[id]=true;
+    if(id==='p'){loadWeather();loadCalendar();}
+    if(id==='s'){loadSportsNews();}
+    if(id==='f'){loadStocks();loadFinanceNews();}
+  }
+}
+function closePanel(){
+  if(curPanel){document.getElementById('panel-'+curPanel).classList.remove('open');}
+  curPanel=null;
+}
+
+/* ── WEATHER (Open-Meteo, no key needed) ── */
+async function loadWeather(){
+  const el=document.getElementById('weatherBar');
+  try{
+    const r=await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${CONFIG.LAT}&longitude=${CONFIG.LON}&current=temperature_2m,weathercode,windspeed_10m,relativehumidity_2m&temperature_unit=fahrenheit&windspeed_unit=mph`);
+    const d=await r.json();
+    const c=d.current;
+    const temp=Math.round(c.temperature_2m);
+    const code=c.weathercode;
+    const desc=wmoDesc(code);
+    const icon=wmoIcon(code);
+    el.style.cssText='display:flex;align-items:center;gap:20px;background:#fff;border:1.5px solid #E8D8B0;border-radius:3px;padding:12px 16px;margin-bottom:16px;';
+    el.innerHTML=`<div style="font-size:36px;">${icon}</div><div class="weather-temp">${temp}°F</div><div><div class="weather-desc">Baltimore, MD &mdash; ${desc}</div><div class="weather-detail">Wind ${Math.round(c.windspeed_10m)} mph &nbsp;·&nbsp; Humidity ${Math.round(c.relativehumidity_2m)}%</div></div>`;
+  }catch(e){el.style.cssText='';el.textContent='Weather unavailable';}
+}
+function wmoDesc(c){if(c===0)return'Clear sky';if(c<=2)return'Partly cloudy';if(c===3)return'Overcast';if(c<=49)return'Foggy';if(c<=59)return'Drizzle';if(c<=69)return'Rain';if(c<=79)return'Snow';if(c<=82)return'Rain showers';if(c<=86)return'Snow showers';return'Thunderstorm';}
+function wmoIcon(c){if(c===0)return'☀️';if(c<=2)return'⛅';if(c===3)return'☁️';if(c<=49)return'🌫️';if(c<=69)return'🌧️';if(c<=79)return'❄️';if(c<=82)return'🌦️';return'⛈️';}
+
+/* ── GOOGLE CALENDAR ── */
+async function loadCalendar(){
+  const statusEl=document.getElementById('calStatus');
+  const gridEl=document.getElementById('calGrid');
+  const eventsEl=document.getElementById('eventsList');
+
+  try{
+    // Use Google Calendar API via key-less embed iframe as fallback,
+    // or full API if GCAL_CLIENT_ID is configured
+    if(!CONFIG.GCAL_CLIENT_ID||CONFIG.GCAL_CLIENT_ID==='YOUR_GOOGLE_CLIENT_ID'){
+      // Fallback: show a static calendar with today highlighted + setup instructions
+      renderStaticCalendar();
+      statusEl.style.display='none';
+      gridEl.style.display='block';
+      eventsEl.innerHTML=`<div style="font-family:'Crimson Pro',serif;font-style:italic;font-size:14px;color:#8B6040;line-height:1.7;">
+        <strong style="font-style:normal;color:#3A1808;">To connect Google Calendar:</strong><br>
+        1. Go to <a href="https://console.cloud.google.com" target="_blank" class="news-link">console.cloud.google.com</a><br>
+        2. Create a project → Enable Google Calendar API<br>
+        3. Create OAuth 2.0 credentials → add your GitHub Pages URL as an authorized origin<br>
+        4. Paste the Client ID into <code>CONFIG.GCAL_CLIENT_ID</code> in this file<br><br>
+        Your upcoming events will appear here automatically.
+      </div>`;
+      return;
+    }
+    // Full OAuth flow
+    await loadGoogleAPI();
+    await gapi.client.init({clientId:CONFIG.GCAL_CLIENT_ID,scope:'https://www.googleapis.com/auth/calendar.readonly',discoveryDocs:['https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest']});
+    if(!gapi.auth2.getAuthInstance().isSignedIn.get()){
+      statusEl.innerHTML=`<button onclick="signInGoogle()" style="font-family:'Cinzel',serif;font-size:12px;background:#1A6BC4;color:#fff;border:none;padding:8px 18px;cursor:pointer;border-radius:2px;letter-spacing:.08em;">Sign in with Google</button>`;
+      return;
+    }
+    await renderGoogleCalendar();
+    statusEl.style.display='none';
+    gridEl.style.display='block';
+  }catch(e){
+    renderStaticCalendar();
+    statusEl.style.display='none';
+    gridEl.style.display='block';
+    eventsEl.innerHTML='<p style="font-family:\'Crimson Pro\',serif;font-style:italic;font-size:13px;color:#8B6040;">Add your Google Client ID in CONFIG to see live events.</p>';
   }
 }
 
-// ─── API helper ───
-async function askClaude(prompt) {
-  if (!ANTHROPIC_API_KEY || ANTHROPIC_API_KEY === 'YOUR_API_KEY_HERE') {
-    document.getElementById('apiBanner').style.display = 'block';
-    throw new Error('No API key — see the banner at the top of the page');
-  }
-  const res = await fetch('https://api.anthropic.com/v1/messages', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      model: 'claude-sonnet-4-20250514',
-      max_tokens: 1000,
-      tools: [{ type: 'web_search_20250305', name: 'web_search' }],
-      messages: [{ role: 'user', content: prompt }]
-    })
+function loadGoogleAPI(){
+  return new Promise(res=>{
+    if(window.gapi){res();return;}
+    const s=document.createElement('script');
+    s.src='https://apis.google.com/js/api.js';
+    s.onload=()=>gapi.load('client:auth2',res);
+    document.head.appendChild(s);
   });
-  if (!res.ok) {
-    const err = await res.json().catch(() => ({}));
-    throw new Error((err.error && err.error.message) || 'API error ' + res.status);
+}
+
+async function signInGoogle(){
+  await gapi.auth2.getAuthInstance().signIn();
+  await renderGoogleCalendar();
+  document.getElementById('calStatus').style.display='none';
+  document.getElementById('calGrid').style.display='block';
+}
+
+async function renderGoogleCalendar(){
+  const now=new Date();
+  const monthStart=new Date(now.getFullYear(),now.getMonth(),1);
+  const monthEnd=new Date(now.getFullYear(),now.getMonth()+1,0);
+  const resp=await gapi.client.calendar.events.list({
+    calendarId:'primary',timeMin:monthStart.toISOString(),timeMax:new Date(now.getFullYear(),now.getMonth()+1,14).toISOString(),
+    singleEvents:true,orderBy:'startTime',maxResults:50
+  });
+  const events=resp.result.items||[];
+  renderCalendarGrid(now,events);
+  renderUpcomingEvents(events.filter(e=>new Date(e.start.dateTime||e.start.date)>=now).slice(0,8));
+}
+
+function renderStaticCalendar(){
+  renderCalendarGrid(new Date(),[]);
+}
+
+function renderCalendarGrid(today,events){
+  const months=['January','February','March','April','May','June','July','August','September','October','November','December'];
+  const lbl=document.getElementById('calMonthLabel');
+  if(lbl) lbl.textContent=months[today.getMonth()]+' '+today.getFullYear();
+  const grid=document.getElementById('calGridInner');
+  if(!grid) return;
+  const evMap={};
+  events.forEach(e=>{
+    const d=new Date(e.start.dateTime||e.start.date);
+    const key=`${d.getFullYear()}-${d.getMonth()}-${d.getDate()}`;
+    if(!evMap[key]) evMap[key]=[];
+    evMap[key].push(e.summary||'Event');
+  });
+  const days=['Su','Mo','Tu','We','Th','Fr','Sa'];
+  let h=days.map(d=>`<div class="cal-day-label">${d}</div>`).join('');
+  const first=new Date(today.getFullYear(),today.getMonth(),1);
+  const last=new Date(today.getFullYear(),today.getMonth()+1,0);
+  for(let i=0;i<first.getDay();i++) h+=`<div class="cal-cell other-month"></div>`;
+  for(let d=1;d<=last.getDate();d++){
+    const isToday=d===today.getDate();
+    const key=`${today.getFullYear()}-${today.getMonth()}-${d}`;
+    const evs=evMap[key]||[];
+    h+=`<div class="cal-cell${isToday?' today':''}"><div class="day-num">${d}</div>${evs.slice(0,2).map(e=>`<span class="event-dot">${e}</span>`).join('')}</div>`;
   }
-  const data = await res.json();
-  return data.content.filter(b => b.type === 'text').map(b => b.text).join('');
+  const remaining=(7-(last.getDay()+1)%7)%7;
+  for(let i=0;i<remaining;i++) h+=`<div class="cal-cell other-month"></div>`;
+  grid.innerHTML=h;
 }
 
-// ─── Helpers ───
-function esc(s) {
-  return String(s || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+function renderUpcomingEvents(events){
+  const el=document.getElementById('eventsList');
+  if(!events||!events.length){el.innerHTML='<p style="font-family:\'Crimson Pro\',serif;font-style:italic;color:#8B6040;font-size:14px;">No upcoming events found.</p>';return;}
+  const days=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+  const months=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  el.innerHTML='<div class="event-list">'+events.map(e=>{
+    const start=new Date(e.start.dateTime||e.start.date);
+    const isAllDay=!e.start.dateTime;
+    const timeStr=isAllDay?`${days[start.getDay()]} ${months[start.getMonth()]} ${start.getDate()}`:`${days[start.getDay()]} ${months[start.getMonth()]} ${start.getDate()} · ${start.toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'})}`;
+    return`<div class="event-item"><div class="event-time">${timeStr}</div><div><div class="event-name">${esc(e.summary||'Untitled')}</div>${e.location?`<div class="event-cal">${esc(e.location)}</div>`:''}</div></div>`;
+  }).join('')+'</div>';
 }
 
-function parseJSON(text) {
-  const match = text.match(/\[[\s\S]*?\]/);
-  if (!match) throw new Error('Could not parse response as JSON');
-  return JSON.parse(match[0]);
-}
-
-function renderNewsCards(containerId, articles) {
-  const el = document.getElementById(containerId);
-  if (!articles || !articles.length) {
-    el.innerHTML = '<div class="error-box">No articles found. Try refreshing.</div>';
+/* ── STOCKS from Google Sheet ── */
+async function loadStocks(){
+  const el=document.getElementById('stockGrid');
+  if(!CONFIG.SHEET_CSV_URL||CONFIG.SHEET_CSV_URL==='YOUR_GOOGLE_SHEET_CSV_URL'){
+    el.innerHTML=`<p style="font-family:'Crimson Pro',serif;font-style:italic;font-size:14px;color:#8B6040;line-height:1.8;">
+      To connect your Google Sheet:<br>
+      1. Open your sheet → File → Share → Publish to web<br>
+      2. Select your sheet tab → CSV format → Publish<br>
+      3. Paste the URL into <code>CONFIG.SHEET_CSV_URL</code><br><br>
+      Expected columns: <strong>Ticker, Name, Shares, Avg Cost, Current Price, Gain/Loss %</strong>
+    </p>`;
     return;
   }
-  el.innerHTML = '<div class="news-grid">' +
-    articles.map(a => `
-      <div class="news-card">
-        <div class="news-tag">${esc(a.tag)}</div>
-        <div class="news-headline">${esc(a.headline)}</div>
-        <div class="news-body">${esc(a.summary)}</div>
-        <div class="news-source">${esc(a.source)}</div>
-      </div>`).join('') +
-  '</div>';
+  try{
+    const r=await fetch(`https://corsproxy.io/?${encodeURIComponent(CONFIG.SHEET_CSV_URL)}`);
+    const text=await r.text();
+    const rows=text.trim().split('\n').map(r=>r.split(',').map(c=>c.trim().replace(/^"|"$/g,'')));
+    if(rows.length<2){el.innerHTML='<p style="font-family:\'Crimson Pro\',serif;font-style:italic;color:#8B6040;">No data found in sheet.</p>';return;}
+    const headers=rows[0];
+    const data=rows.slice(1).filter(r=>r.some(c=>c));
+    // Find columns flexibly
+    const ci=(name)=>headers.findIndex(h=>h.toLowerCase().includes(name.toLowerCase()));
+    const tickerI=ci('ticker')>=0?ci('ticker'):0;
+    const nameI=ci('name')>=0?ci('name'):1;
+    const priceI=ci('price')>=0?ci('price'):4;
+    const gainI=ci('gain')>=0?ci('gain'):ci('loss')>=0?ci('loss'):5;
+    el.innerHTML='<div class="stock-grid">'+data.map(row=>{
+      const ticker=row[tickerI]||'';
+      const name=row[nameI]||'';
+      const price=row[priceI]||'—';
+      const gain=row[gainI]||'';
+      const gainNum=parseFloat(gain);
+      const gainClass=isNaN(gainNum)?'':(gainNum>=0?'up':'dn');
+      const gainStr=isNaN(gainNum)?gain:(gainNum>=0?`+${gainNum.toFixed(2)}%`:`${gainNum.toFixed(2)}%`);
+      return`<div class="stock-card"><div class="stock-ticker">${esc(ticker)}</div><div class="stock-name">${esc(name)}</div><div class="stock-price">${esc(price)}</div><div class="stock-change ${gainClass}">${esc(gainStr)}</div></div>`;
+    }).join('')+'</div>';
+  }catch(e){el.innerHTML=`<p style="font-family:'Crimson Pro',serif;font-style:italic;color:#8B6040;">Could not load sheet: ${esc(e.message)}</p>`;}
 }
 
-// ─── Sports ───
-async function loadSports() {
-  await Promise.all([loadScores(), loadNews('sports')]);
+/* ── MARKET INDICES (Yahoo Finance via allorigins proxy) ── */
+async function loadIndices(){
+  const el=document.getElementById('indicesGrid');
+  const tickers=[['%5EGSPC','S&P 500'],['%5EIXIC','NASDAQ'],['%5EDJI','DOW']];
+  try{
+    const results=await Promise.all(tickers.map(async([sym,name])=>{
+      try{
+        const r=await fetch(`https://api.allorigins.win/get?url=${encodeURIComponent(`https://query1.finance.yahoo.com/v8/finance/chart/${sym}?interval=1d&range=1d`)}`);
+        const j=await r.json();
+        const data=JSON.parse(j.contents);
+        const meta=data.chart.result[0].meta;
+        const price=meta.regularMarketPrice;
+        const prev=meta.previousClose||meta.chartPreviousClose;
+        const chg=((price-prev)/prev*100);
+        return{name,price:price.toFixed(2),chg:chg.toFixed(2),up:chg>=0};
+      }catch{return{name,price:'—',chg:'—',up:true};}
+    }));
+    el.innerHTML=results.map(s=>`<div class="stock-card"><div class="stock-ticker">${esc(s.name)}</div><div class="stock-price">${s.price==='—'?'—':'$'+s.price}</div><div class="stock-change ${s.up?'up':'dn'}">${s.chg==='—'?'—':(s.up?'+':'')+s.chg+'%'}</div></div>`).join('');
+  }catch(e){el.innerHTML='<p style="font-family:\'Crimson Pro\',serif;font-style:italic;color:#8B6040;font-size:13px;">Could not load indices.</p>';}
 }
 
-async function loadScores() {
-  const grid = document.getElementById('scoresGrid');
-  try {
-    const prompt = `Search the web for the most recent game results or next scheduled game for each of these teams:
-Baltimore Ravens (NFL), Baltimore Orioles (MLB), Maryland Terrapins Football (NCAA), Maryland Terrapins Basketball (NCAA),
-Chelsea FC (Premier League), Panathinaikos (Super League Greece), Washington Capitals (NHL), Washington Wizards (NBA).
-
-Return ONLY a valid JSON array — no markdown, no explanation, no backticks. Each element must have exactly these keys:
-"team" (short name), "league", "opponent", "teamScore" (string or null), "opponentScore" (string or null),
-"winner" ("team", "opponent", "draw", or null if not yet played), "status" (e.g. "Final", "Live", or date/time of next game).
-Return exactly 8 objects, one per team.`;
-
-    const raw = await askClaude(prompt);
-    const scores = parseJSON(raw);
-    grid.innerHTML = scores.map(s => {
-      const teamWon = s.winner === 'team';
-      const oppWon  = s.winner === 'opponent';
-      const played  = s.teamScore !== null && s.teamScore !== undefined;
-      return `<div class="score-card">
-        <div class="sc-league">${esc(s.league)}</div>
-        <div class="sc-teams">
-          <div class="sc-team ${teamWon ? 'winner' : ''}">
-            <span class="sc-name">${esc(s.team)}</span>
-            <span class="sc-score">${played ? esc(s.teamScore) : '—'}</span>
-          </div>
-          <div class="sc-team ${oppWon ? 'winner' : ''}">
-            <span class="sc-name">${esc(s.opponent)}</span>
-            <span class="sc-score">${played ? esc(s.opponentScore) : '—'}</span>
-          </div>
-        </div>
-        <div class="sc-status">${esc(s.status)}</div>
-      </div>`;
-    }).join('');
-  } catch(e) {
-    grid.innerHTML = `<div class="error-box">Could not load scores.<br><small>${esc(e.message)}</small></div>`;
+/* ── NEWS (NewsData.io) ── */
+async function fetchNews(query,targetEl){
+  const el=document.getElementById(targetEl);
+  if(!CONFIG.NEWS_API_KEY||CONFIG.NEWS_API_KEY==='YOUR_NEWSDATA_KEY'){
+    el.innerHTML=`<p style="font-family:'Crimson Pro',serif;font-style:italic;font-size:14px;color:#8B6040;line-height:1.8;">
+      Add your free NewsData.io API key to <code>CONFIG.NEWS_API_KEY</code> to see live headlines.<br>
+      Get one free at <a href="https://newsdata.io" target="_blank" class="news-link">newsdata.io</a> (takes 2 min, 200 requests/day free).
+    </p>`;
+    return;
   }
+  try{
+    const url=`https://newsdata.io/api/1/news?apikey=${CONFIG.NEWS_API_KEY}&q=${encodeURIComponent(query)}&language=en&size=6`;
+    const r=await fetch(url);
+    const d=await r.json();
+    if(!d.results||!d.results.length){el.innerHTML='<p style="font-family:\'Crimson Pro\',serif;font-style:italic;color:#8B6040;">No articles found.</p>';return;}
+    el.innerHTML='<div class="news-list">'+d.results.map(a=>`
+      <div class="news-item">
+        <div class="news-tag">${esc(a.source_id||'')}</div>
+        <div class="news-headline">${esc(a.title||'')}</div>
+        <div class="news-source">${esc(a.pubDate?a.pubDate.split(' ')[0]:'')} ${a.link?`· <a href="${esc(a.link)}" target="_blank" class="news-link">Read →</a>`:''}</div>
+      </div>`).join('')+'</div>';
+  }catch(e){el.innerHTML=`<p style="font-family:'Crimson Pro',serif;font-style:italic;color:#8B6040;">Could not load news: ${esc(e.message)}</p>`;}
 }
 
-// ─── News configs ───
-const newsConfig = {
-  sports: {
-    containerId: 'sportsNews',
-    prompt: `Search the web for the 6 most recent sports news stories about: Baltimore Ravens, Baltimore Orioles, Maryland Terrapins, Chelsea FC, Panathinaikos, Washington Capitals, Washington Wizards.
-Return ONLY a valid JSON array — no markdown, no backticks, no explanation. Each object must have:
-"tag" (team name), "headline" (max 12 words), "summary" (2-3 sentences), "source" (outlet and date).`
-  },
-  world: {
-    containerId: 'worldNews',
-    prompt: `Search the web for the 8 most important current news stories: 4 about the United States and 4 about Greece.
-Return ONLY a valid JSON array — no markdown, no backticks, no explanation. Each object must have:
-"tag" ("USA" or "Greece"), "headline" (max 12 words), "summary" (2-3 sentences), "source" (outlet and date).`
-  },
-  finance: {
-    containerId: 'financeNews',
-    prompt: `Search the web for the 8 most important current global finance and markets news stories. Cover stock markets, economic data, central banks, and major corporate news.
-Return ONLY a valid JSON array — no markdown, no backticks, no explanation. Each object must have:
-"tag" (category: "Markets", "Economy", "Fed", "Earnings", "Crypto", etc.), "headline" (max 12 words), "summary" (2-3 sentences), "source" (outlet and date).`
-  }
-};
+function loadSportsNews(){fetchNews('Ravens OR Orioles OR "Chelsea FC" OR Panathinaikos OR Capitals OR Wizards OR "Maryland Terps"','sportsNews');}
+function loadFinanceNews(){fetchNews('stock market OR finance OR economy OR Fed OR earnings','financeNews');loadIndices();}
 
-async function loadNews(section) {
-  const cfg = newsConfig[section];
-  const el  = document.getElementById(cfg.containerId);
-  try {
-    const raw = await askClaude(cfg.prompt);
-    renderNewsCards(cfg.containerId, parseJSON(raw));
-  } catch(e) {
-    el.innerHTML = `<div class="error-box">Could not load news.<br><small>${esc(e.message)}</small></div>`;
-  }
-}
+function esc(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
 </script>
 </body>
 </html>
