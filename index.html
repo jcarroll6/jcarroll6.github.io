@@ -43,7 +43,7 @@ body{font-family:'Crimson Pro',serif;background:#1a2a4a;overflow-x:hidden;}
 .aw-scallop span{flex:1;height:16px;border-radius:0 0 50% 50%;display:block;border-bottom:2px solid rgba(0,0,0,.15);}
 
 /* ── STONE WALL ── */
-.stone-wall{height:90px;position:relative;overflow:hidden;display:flex;flex-direction:column;justify-content:flex-start;padding:8px 10px 0;}
+.stone-wall{min-height:110px;position:relative;overflow:visible;display:flex;flex-direction:column;justify-content:flex-start;padding:8px 10px 4px;}
 
 /* ── WINDOW ── */
 .win-wrap{margin:0 auto;width:70%;position:relative;}
@@ -220,7 +220,7 @@ const CONFIG = {
 <div class="bunting-bar"><svg id="buntingEl" preserveAspectRatio="none"></svg></div>
 
 <div class="building-wrap">
-  <svg class="stone-svg" id="stoneSvg" style="height:300px;" preserveAspectRatio="none"></svg>
+  <svg class="stone-svg" id="stoneSvg" style="height:400px;" preserveAspectRatio="none"></svg>
 
   <div class="storefronts">
     <!-- PERSONAL -->
@@ -449,7 +449,7 @@ for(let i=0;i<60;i++){const s=document.createElement('div');const sz=Math.random
 (function(){const svg=document.getElementById('buntingEl'),W=1400,cols=['#1560BD','#fff','#C42020','#F5C842','#1560BD','#fff','#209A40','#C42020'];svg.setAttribute('viewBox',`0 0 ${W} 20`);let h='';for(let x=0;x<W;x+=30){const c=cols[Math.floor(x/30)%cols.length];h+=`<polygon points="${x+1},1 ${x+29},1 ${x+15},18" fill="${c}" opacity=".88"/><line x1="${x}" y1="1" x2="${x+30}" y2="1" stroke="#aaa" stroke-width=".7" opacity=".45"/>`;}svg.innerHTML=h;})();
 
 /* STONE */
-(function(){const svg=document.getElementById('stoneSvg'),W=800,H=300;svg.setAttribute('viewBox',`0 0 ${W} ${H}`);let h='';[0,28,54,78,100,122,143,164,184,204,224,244,264,284].forEach((y,ri)=>{let x=ri%2===0?0:-25;while(x<W){const w=40+Math.random()*30,ht=16+Math.random()*8,c=Math.random()<.5?'rgba(0,0,0,.05)':'rgba(255,255,255,.06)';h+=`<rect x="${x+1}" y="${y+1}" width="${w-2}" height="${ht-2}" fill="${c}" rx="1"/><rect x="${x}" y="${y}" width="${w}" height="${ht}" fill="none" stroke="rgba(80,50,20,.12)" stroke-width=".8" rx="1"/>`;x+=w+1;}});svg.innerHTML=h;})();
+(function(){const svg=document.getElementById('stoneSvg'),W=800,H=400;svg.setAttribute('viewBox',`0 0 ${W} ${H}`);let h='';[0,28,54,78,100,122,143,164,184,204,224,244,264,284].forEach((y,ri)=>{let x=ri%2===0?0:-25;while(x<W){const w=40+Math.random()*30,ht=16+Math.random()*8,c=Math.random()<.5?'rgba(0,0,0,.05)':'rgba(255,255,255,.06)';h+=`<rect x="${x+1}" y="${y+1}" width="${w-2}" height="${ht-2}" fill="${c}" rx="1"/><rect x="${x}" y="${y}" width="${w}" height="${ht}" fill="none" stroke="rgba(80,50,20,.12)" stroke-width=".8" rx="1"/>`;x+=w+1;}});svg.innerHTML=h;})();
 
 /* OUTDOOR TABLES */
 (function(){const oa=document.getElementById('outdoorArea');let h='<div style="display:flex;align-items:flex-end;justify-content:space-around;padding:0 8px;">';for(let i=0;i<5;i++){const w=42+Math.random()*10|0;h+=`<div style="display:flex;flex-direction:column;align-items:center;"><div style="display:flex;gap:5px;margin-bottom:3px;"><div style="width:13px;height:11px;background:#8B2020;border-radius:1px 1px 0 0;border:1px solid #5A1010;"></div><div style="width:13px;height:11px;background:#8B2020;border-radius:1px 1px 0 0;border:1px solid #5A1010;"></div></div><div style="width:${w}px;height:7px;position:relative;border-radius:2px 2px 0 0;overflow:hidden;background:#fff;"><div style="position:absolute;inset:0;background-image:repeating-linear-gradient(0deg,transparent,transparent 5px,rgba(180,30,30,.4) 5px,rgba(180,30,30,.4) 6px),repeating-linear-gradient(90deg,transparent,transparent 5px,rgba(180,30,30,.4) 5px,rgba(180,30,30,.4) 6px);"></div></div><div style="width:${w+6}px;height:4px;background:#A07840;border:1px solid #7A5820;"></div><div style="display:flex;justify-content:space-between;width:${w-8}px;"><div style="width:3px;height:${12+Math.random()*4|0}px;background:#6A4020;"></div><div style="width:3px;height:${12+Math.random()*4|0}px;background:#6A4020;"></div></div></div>`;}h+='</div>';
